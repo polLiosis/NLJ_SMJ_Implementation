@@ -10,7 +10,7 @@ Implementation of NLJ (Nested Loop Join) and SMJ (Sort Merge Join). The program 
 **-t**: a directory to use for reading/writing temporary files
 **-o**: the file to store the result of the join
 
-For example, in order to join two relations stored in files “F1.csv” and “F2.csv” on the first column of F1 and the second column of F2, using Sort-Merge Join, having available memory = 200 records and saving the result to file “results.csv” one should execute the following command:
+For example, in order to join two relations stored in files “F1.csv” and “F2.csv” on the first column of F1 and the second column of F2, using Sort-Merge Join, having available memory = 200 records and saving the results to file “results.csv” one should execute the following command:
 
 *java –jar joinalgs.jar –f1 F1.csv –a1 0 –f2 F2.csv –a2 1 –j SMJ –m 200 –t tmp –o results.csv
 *
@@ -30,25 +30,16 @@ arguments with **exactly the same form as the following example:**
 –t "path of Temp folder"
 –o "Path of results.csv file"
 
-Obviously you can chnage the path of each file from the above example accordingly.
+Obviously you can change the path of each file from the above example accordingly.
 
 
 ***
 
 **Nested Loop Join (NLJ) algorithm**
 Implemented a simple blocked-based NLJ algorithm. That means that if we have two relations R and S, first of all we will make the decision of which relationship to choose as outer and which as inner. In general, we read the selected outer relation in blocks of size m-1, where m the inserted number of buffers. For this purpose we use a simple static table of size m-1. When our table becomes full of records, we use the last available block (m) to load a single record from the inner file and try to make a join for each record inside the table. More specifically, for every m-1 records of the outer file we read the whole inner file and we write possible joined records in the results.csv file.
-NLJ algorithm was executed for the following inputs:
-![](/home/akis/Pictures/Screenshots/1.png) 
-
-From the above computation we can observe that the results are obviously correct, and we also calculate the right amount of I/Os.
-
-
-***
 
 
 **Sort Merge Join (SMJ) algorithm**
-Implemented a simple sort merge join algorithm. It is executed in two levels; a two-phase sorting algorithm and a merge join algorithm. During the two-phase sorting algorithm we create sorted sublists and in the end we reassemble the starting file in a sorted ascending order. During the second level, a merge-join algorithm was implemented.
-In the end we print the results and we delete the temporary files that were created during the execution of
-the SMJ algorithm.
+Implemented a simple sort merge join algorithm. It is executed in two levels; a two-phase sorting algorithm and a merge join algorithm. During the two-phase sorting algorithm we create sorted sublists and in the end we reassemble the starting file in a sorted ascending order. During the second level, a merge-join algorithm was implemented. In the end we print the results and we delete the temporary files that were created during the execution of the SMJ algorithm.
 
 
